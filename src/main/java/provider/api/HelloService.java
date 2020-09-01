@@ -5,5 +5,9 @@ package provider.api;
  */
 public interface HelloService {
 
-    public String sayHello(String username);
+    String sayHello(String username);
+
+    String addStr(String a, String b);
+
+    Integer addInteger(Integer a, Integer b);
 }

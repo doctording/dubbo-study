@@ -54,7 +54,8 @@ public class HttpServer {
         service.addConnector(connector);
         // service在getServer时就被添加到server节点了
 
-        // tomcat是一个servlet,设置路径与映射
+        // tomcat是一个servlet,设置路径与映射,自己构造一个 DispatcherServlet
+        // 请求通过 DispatcherServlet 分发
         tomcat.addServlet(contextPath,"dispatcher",new DispatcherServlet());
         context.addServletMappingDecoded("/client/*","dispatcher");
 
@@ -65,5 +66,4 @@ public class HttpServer {
             e.printStackTrace();
         }
     }
-
-    }
+}

@@ -13,6 +13,7 @@ public class DispatcherServlet extends HttpServlet{
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 方便后期在此拓展服务
+        // DispatcherServlet分发请求交给 HttpServerHandle 的 handler方法处理
         new HttpServerHandler().handler(req, resp);
     }
 }

@@ -20,16 +20,24 @@ public class HttpServerHandler {
     public void handler(HttpServletRequest req, HttpServletResponse resp){
 
         try{
-            // Http请求流转为对象
+            // Http请求流转为请求对象
             InputStream is = req.getInputStream();
             ObjectInputStream ois = new ObjectInputStream(is);
+            // 请求对象 Invocation，包括了接口类，方法名，方法参数类型，方法参数具体值
             Invocation invocation = (Invocation)ois.readObject();
 
-            // 寻找实现类，通过反射执行
-            Class implClass = Register.get(new URL("localhost",8080),invocation.getInterfaceName());
+            // 反射执行调用并返回
+            Class implClass = Register.getClass(new URL("localhost",8080),invocation.getInterfaceName());
             Method method = implClass.getMethod(invocation.getMethodName(),invocation.getParamTypes());
-            // 执行结果
-            String result = (String) method.invoke(implClass.newInstance(),invocation.getParams());
+            // 执行结果，这里执行结果要执行序列化
+            // TODO
+            Object resultObj = method.invoke(implClass.newInstance(),invocation.getParams());
+            String result;
+            if(resultObj instanceof String) {
+                result = (String)resultObj;
+            }else {
+                result = String.valueOf(resultObj);
+            }
             System.out.println(result);
 
             // 将结果返回
