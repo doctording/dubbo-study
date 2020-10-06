@@ -24,10 +24,10 @@ public class ProxyFactory<T> {
                         args,
                         method.getParameterTypes()
                 );
-                // 模拟负载均衡，随机获取服务器
-                URL url = Register.random(interfaceClass.getName());
+                // 即注册中心负载均衡获取接口所对应的服务器
+                URL url = LoadBalance.getUrl(interfaceClass.getName());
 
-                // 调用并返回
+                // 模拟远程调用（网络调用）并返回
                 HttpClient httpClient = new HttpClient();
                 String rs = httpClient.post(url.getHostname(),url.getPort(),invocation);
 

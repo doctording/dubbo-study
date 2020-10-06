@@ -21,11 +21,12 @@ public class HttpServerHandler {
 
         try{
             // Http请求流转为请求对象
+            // 请求对象 Invocation: 包括了要访问的接口类，方法名，方法参数类型，方法参数具体值
             InputStream is = req.getInputStream();
             ObjectInputStream ois = new ObjectInputStream(is);
-            // 请求对象 Invocation，包括了接口类，方法名，方法参数类型，方法参数具体值
             Invocation invocation = (Invocation)ois.readObject();
 
+            // 从注册表中获取到接口的实现类
             // 反射执行调用并返回
             Class implClass = Register.getClass(new URL("localhost",8080),invocation.getInterfaceName());
             Method method = implClass.getMethod(invocation.getMethodName(),invocation.getParamTypes());

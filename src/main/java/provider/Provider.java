@@ -13,6 +13,8 @@ public class Provider {
 
     public static void main(String[] args) {
         // 注册服务：注册内容写入注册中心(本例注册中心是个txt文本)
+        // 本地注册
+        // 远程注册：一般是zookeeper
         URL url = new URL("localhost", 8080);
         Register.regist(url, HelloService.class.getName(), HelloServiceImpl.class);
 
